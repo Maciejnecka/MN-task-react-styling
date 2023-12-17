@@ -1,7 +1,8 @@
 import React from 'react';
+import Button from './Button/index';
 
 function App() {
-    return <h1>Hello World</h1>;
+    return <Button type="button">Button</Button>;
 }
 
 export default App;
