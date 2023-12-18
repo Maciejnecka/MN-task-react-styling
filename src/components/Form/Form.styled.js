@@ -9,7 +9,7 @@ export const FormContainerStyled = styled.div`
     border-radius: 15px;
     background-color: #f0f0f0;
 
-    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.5);
+    box-shadow: inset -5px 5px 0px #5c5c5c, inset 5px -5px 0px #ffffff;
 
     display: flex;
     flex-direction: column;
@@ -45,7 +45,7 @@ export const FormStepStyled = styled.div`
     & .birthDate--placeholder {
         display: flex;
         justify-content: center;
-        margin-bottom: 2px;
+        margin-bottom: 3px;
         color: var(--color-font-black);
         text-align: center;
     }

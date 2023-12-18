@@ -1,8 +1,13 @@
 import React from 'react';
-import StyledCheckbox from './Checkbox.styled';
+import { StyledCheckbox, StyledCheckboxLabel } from './Checkbox.styled';
 
-function Checkbox({ checked, onChange }) {
-    return <StyledCheckbox type="checkbox" checked={checked} onChange={onChange} />;
+function Checkbox({ id, checked, onChange, children }) {
+    return (
+        <StyledCheckboxLabel htmlFor={id}>
+            <StyledCheckbox id={id} type="checkbox" checked={checked} onChange={onChange} />
+            {children}
+        </StyledCheckboxLabel>
+    );
 }
 
 export default Checkbox;

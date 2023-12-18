@@ -9,7 +9,7 @@ const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
     width: var(--checkbox-diameter);
     height: var(--checkbox-diameter);
     border-radius: var(--checkbox-border-radius);
-    background: var(--color-white-main);
+    background: #1e4620;
     border: var(--checkbox-border-width) var(--checkbox-border-style) var(--color-white-main);
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
@@ -80,4 +80,10 @@ const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
     }
 `;
 
-export default StyledCheckbox;
+const StyledCheckboxLabel = styled.label`
+    display: flex;
+    align-items: center;
+    /* gap: 10px; */
+`;
+
+export { StyledCheckbox, StyledCheckboxLabel };

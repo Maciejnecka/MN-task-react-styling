@@ -7,8 +7,7 @@ const FormProgressStyled = styled.div`
     position: relative;
     border: 2px solid var(--color-bar-progress);
     border-radius: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.5), 5px 5px 6px #9f9f9f,
-        -5px -5px 6px #ffffff;
+    box-shadow: inset 5px -5px 0px #5c5c5c, inset -5px 5px 0px #ffffff;
 
     &:after {
         content: '';
