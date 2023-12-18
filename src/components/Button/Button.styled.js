@@ -15,7 +15,7 @@ const StyledButton = styled.button`
     box-shadow: var(--btn-box-shadow);
     border: none;
     font-size: 18px;
-    color: var(--color-font-main);
+    color: var(--color-white-main);
     transition: var(--transition);
 
     &:hover {
