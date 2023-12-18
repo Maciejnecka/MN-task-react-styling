@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const FormContainerStyled = styled.div`
+    position: relative;
     width: 500px;
     height: 500px;
     margin: 2rem auto;
@@ -19,12 +20,24 @@ export const FormContainerStyled = styled.div`
     }
 `;
 
+const fadeInOut = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const FormStepStyled = styled.div`
     display: ${(props) => (props.active ? 'flex' : 'none')};
     width: 500px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    animation: ${fadeInOut} 1s ease;
     & label {
         width: 100%;
         margin: 20px;
@@ -32,6 +45,8 @@ export const FormStepStyled = styled.div`
 `;
 
 export const FormButtonsStyled = styled.div`
+    position: absolute;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;

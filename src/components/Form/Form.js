@@ -22,7 +22,12 @@ function Form() {
         e.preventDefault();
     };
 
-    const handleInputChange = () => {};
+    const handleInputChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     const errors = () => {};
 
@@ -34,7 +39,8 @@ function Form() {
                     <label htmlFor="firstName">
                         <Input
                             placeholder="First Name"
-                            label="Pole 1"
+                            type="text"
+                            label="step 1"
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleInputChange}
@@ -44,9 +50,10 @@ function Form() {
                     <label htmlFor="lastName">
                         <Input
                             placeholder="Last Name"
-                            label="Pole 2"
+                            type="text"
+                            label="step 1"
                             name="lastName"
-                            value={formData.field2}
+                            value={formData.lastName}
                             onChange={handleInputChange}
                         />
                         {}
@@ -58,9 +65,10 @@ function Form() {
                     <label htmlFor="lastName">
                         <Input
                             placeholder="Last Name"
-                            label="Pole 2"
+                            type="text"
+                            label="step 2"
                             name="lastName"
-                            value={formData.field2}
+                            value={formData.lastName}
                             onChange={handleInputChange}
                         />
                         {}
@@ -71,9 +79,10 @@ function Form() {
                     <label htmlFor="email">
                         <Input
                             placeholder="email@example.com"
-                            label="Pole 3"
+                            type="email"
+                            label="step 3"
                             name="email"
-                            value={formData.field3}
+                            value={formData.email}
                             onChange={handleInputChange}
                         />
                         {}
@@ -82,9 +91,9 @@ function Form() {
                 <FormProgressBar progress={progress} step={step} />
             </form>
             <FormButtonsStyled>
-                {step > 1 && <Button onClick={handlePreviousStep}>Previous</Button>}
+                {step > 1 && <Button onClick={handlePreviousStep}>◀ Previous</Button>}
 
-                {step < 3 ? <Button onClick={handleNextStep}>Next</Button> : <Button type="submit">Submit</Button>}
+                {step < 3 ? <Button onClick={handleNextStep}>Next ▶</Button> : <Button type="submit"> Submit ✔</Button>}
             </FormButtonsStyled>
         </FormContainerStyled>
     );
