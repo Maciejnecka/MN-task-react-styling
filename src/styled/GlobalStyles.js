@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
    --color-white-main: #ebebeb;
    --color-font-black: #222;
    --color-neon-green: #39ff14;
+   --color-bar-progress: #4caf50;
    --transition: 0.5s;
 
    /* //////////////////////////////////// */

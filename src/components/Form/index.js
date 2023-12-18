@@ -1,6 +1,7 @@
 import Form from './Form';
 
-import { FormContainerStyled, FormStepStyled, FormButtonsStyled, FormProgressStyled } from './Form.styled';
+import { FormContainerStyled, FormStepStyled, FormButtonsStyled } from './Form.styled';
 
 export default Form;
-export { FormContainerStyled, FormStepStyled, FormButtonsStyled, FormProgressStyled };
+
+export { FormContainerStyled, FormStepStyled, FormButtonsStyled };

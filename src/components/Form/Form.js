@@ -1,36 +1,28 @@
 import React, { useState } from 'react';
-import { FormContainerStyled, FormStepStyled, FormButtonsStyled, FormProgressStyled } from './Form.styled';
+import { FormContainerStyled, FormStepStyled, FormButtonsStyled } from './Form.styled';
+import FormProgressBar from './FormProgressBar';
 import Button from '../Button/index';
 import Input from '../Input/index';
 
 function Form() {
     const [step, setStep] = useState(1);
     // eslint-disable-next-line no-unused-vars
-    const [formData, setFormData] = useState({
-        // Inicjalizuj dane formularza
-        // ...
-    });
+    const [formData, setFormData] = useState({});
     const progress = (step / 3) * 100;
 
     const handleNextStep = () => {
-        // Dodaj logikę do przechodzenia do kolejnego etapu
         setStep(step + 1);
     };
 
     const handlePreviousStep = () => {
-        // Dodaj logikę do powrotu do poprzedniego etapu
         setStep(step - 1);
     };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        // Dodaj logikę obsługi złożonego formularza
-        // ...
     };
 
-    const handleInputChange = () => {
-        // Dodaj logike obslugi
-    };
+    const handleInputChange = () => {};
 
     const errors = () => {};
 
@@ -49,7 +41,17 @@ function Form() {
                         />
                         {errors.firstName && <p className="form__error">{errors.firstName}</p>}
                     </label>
-                    {/* ... Add other components for the first step */}
+                    <label htmlFor="lastName">
+                        <Input
+                            placeholder="Last Name"
+                            label="Pole 2"
+                            name="lastName"
+                            value={formData.field2}
+                            onChange={handleInputChange}
+                        />
+                        {}
+                    </label>
+                    {}
                 </FormStepStyled>
 
                 <FormStepStyled active={step === 2}>
@@ -61,7 +63,7 @@ function Form() {
                             value={formData.field2}
                             onChange={handleInputChange}
                         />
-                        {/* ... Add other components for the second step */}
+                        {}
                     </label>
                 </FormStepStyled>
 
@@ -74,17 +76,16 @@ function Form() {
                             value={formData.field3}
                             onChange={handleInputChange}
                         />
-                        {/* ... Add other components for the third step */}
+                        {}
                     </label>
                 </FormStepStyled>
-                <FormButtonsStyled>
-                    {step > 1 && <Button onClick={handlePreviousStep}>Previous</Button>}
-
-                    {step < 3 ? <Button onClick={handleNextStep}>Next</Button> : <Button type="submit">Submit</Button>}
-                </FormButtonsStyled>
-                <FormProgressStyled style={{ width: `${progress}%` }} />
-                <p>{`${step}/3`}</p>
+                <FormProgressBar progress={progress} step={step} />
             </form>
+            <FormButtonsStyled>
+                {step > 1 && <Button onClick={handlePreviousStep}>Previous</Button>}
+
+                {step < 3 ? <Button onClick={handleNextStep}>Next</Button> : <Button type="submit">Submit</Button>}
+            </FormButtonsStyled>
         </FormContainerStyled>
     );
 }
