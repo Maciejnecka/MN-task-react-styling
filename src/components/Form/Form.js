@@ -1,20 +1,33 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormContainerStyled, FormStepStyled, FormButtonsStyled } from './Form.styled';
 import FormProgressBar from './Progressbar/index';
 import Button from '../Button/index';
-import Input from '../Input/index';
 import Checkbox from '../Checkbox/index';
 import { CustomDropdown, countryOptions } from './Dropdown/CustomDropdown';
+import StyledInput from '../Input/Input.styled';
 
 function Form() {
     const [step, setStep] = useState(1);
-    // eslint-disable-next-line no-unused-vars
+    const [progress, setProgress] = useState(0);
     const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        birthDate: '',
+        country: '',
+        postalCode: '',
+        address: '',
+        homeNumber: '',
         acceptLicenseAgreement: false,
         notARobot: false,
     });
-    const progress = (step / 3) * 100;
+
+    useEffect(() => {
+        const filledInputs = Object.values(formData).filter((value) => value !== '' && value !== false);
+        const calculatedProgress = (filledInputs.length / Object.keys(formData).length) * 100;
+        setProgress(calculatedProgress);
+    }, [formData]);
 
     const handleNextStep = () => {
         setStep(step + 1);
@@ -31,16 +44,24 @@ function Form() {
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
+        const inputValue = type === 'checkbox' ? checked : value;
 
-        console.log('Input changed:', name, value, type, checked);
+        console.log('Input Change:', name, inputValue);
 
         setFormData((prevFormData) => ({
             ...prevFormData,
-            [name]: type === 'checkbox' ? checked : value,
+            [name]: inputValue,
         }));
     };
 
-    const errors = () => {};
+    const errors = () => {
+        const validationErrors = {};
+        if (!formData.firstName.trim()) {
+            validationErrors.firstName = 'First Name is required';
+        }
+
+        return validationErrors;
+    };
 
     return (
         <FormContainerStyled>
@@ -48,11 +69,10 @@ function Form() {
             <form onSubmit={handleFormSubmit}>
                 <FormStepStyled active={step === 1}>
                     <label htmlFor="firstName">
-                        <Input
+                        <StyledInput
                             id="firstName"
                             placeholder="First Name"
                             type="text"
-                            label="First Name"
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleInputChange}
@@ -60,11 +80,10 @@ function Form() {
                         {errors.firstName && <p className="form__error">{errors.firstName}</p>}
                     </label>
                     <label htmlFor="lastName">
-                        <Input
+                        <StyledInput
                             id="lastName"
                             placeholder="Last Name"
                             type="text"
-                            label="Last Name"
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleInputChange}
@@ -72,11 +91,10 @@ function Form() {
                         {errors.lastName && <p className="form__error">{errors.lastName}</p>}
                     </label>
                     <label htmlFor="email">
-                        <Input
+                        <StyledInput
                             id="email"
                             placeholder="email@example.com"
                             type="email"
-                            label="Email"
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
@@ -85,7 +103,7 @@ function Form() {
                     </label>
                     <label htmlFor="birthDate">
                         <span className="birthDate--placeholder">Birth Date</span>
-                        <Input
+                        <StyledInput
                             id="birthDate"
                             type="date"
                             name="birthDate"
@@ -101,6 +119,7 @@ function Form() {
                         <span className="country--input">Choose your country </span>
                         <CustomDropdown
                             options={countryOptions}
+                            name="country"
                             value={formData.country}
                             onChange={(selectedCountry) =>
                                 handleInputChange({ target: { name: 'country', value: selectedCountry } })
@@ -108,33 +127,30 @@ function Form() {
                         />
                     </label>
                     <label htmlFor="postalCode">
-                        <Input
+                        <StyledInput
                             id="postalCode"
                             placeholder="Postal Code XX-XXX"
                             type="text"
-                            label="Postal Code"
                             name="postalCode"
                             value={formData.postalCode}
                             onChange={handleInputChange}
                         />
                     </label>
                     <label htmlFor="address">
-                        <Input
+                        <StyledInput
                             id="address"
                             placeholder="Town"
                             type="text"
-                            label="Address"
                             name="address"
                             value={formData.address}
                             onChange={handleInputChange}
                         />
                     </label>
                     <label htmlFor="homeNumber">
-                        <Input
+                        <StyledInput
                             id="homeNumber"
                             placeholder="Home Number"
                             type="text"
-                            label="Home Number"
                             name="homeNumber"
                             value={formData.homeNumber}
                             onChange={handleInputChange}
@@ -147,6 +163,7 @@ function Form() {
                         <Checkbox
                             id="licenseAgreement"
                             checked={formData.acceptLicenseAgreement}
+                            name="licenseAgreement"
                             onChange={(e) =>
                                 handleInputChange({
                                     target: { name: 'acceptLicenseAgreement', value: e.target.checked },
@@ -160,6 +177,7 @@ function Form() {
                         <Checkbox
                             id="notARobot"
                             checked={formData.notARobot}
+                            name="notARobot"
                             onChange={(e) =>
                                 handleInputChange({ target: { name: 'notARobot', value: e.target.checked } })
                             }
@@ -187,8 +205,3 @@ function Form() {
 }
 
 export default Form;
-
-// I accept the End User License Agreement and acknowledge that I have read and understood the
-//  Privacy Policy.
-
-// I`m Not a robot

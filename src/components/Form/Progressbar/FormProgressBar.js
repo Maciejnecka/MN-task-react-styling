@@ -1,14 +1,16 @@
 import React from 'react';
 import FormProgressStyled from './FormProgressBar.styled';
 
-function FormProgressBar({ progress, step }) {
+function FormProgressBar({ progress }) {
+    const formattedProgress = `${Math.round(progress)}%`;
+
     return (
         <FormProgressStyled
             width={`${progress}%`}
             barColor="var(--color-bar-progress)"
             textColor="var(--color-bar-progress)"
         >
-            <p>{`${step}/3`}</p>
+            <p>{formattedProgress}</p>
         </FormProgressStyled>
     );
 }
