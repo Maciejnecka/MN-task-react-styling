@@ -3,13 +3,10 @@
         "@babel/core": "^7.22.11",
         "@iconscout/react-unicons": "^2.0.2",
         "country-state-city": "^3.2.0",
-        "css-loader": "^6.8.1",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "sass": "^1.66.1",
-        "sass-loader": "^13.3.2",
-        "style-loader": "^3.3.3",
         "styled-components": "^5.3.11",
         "styled-reset": "^4.5.1"
     },

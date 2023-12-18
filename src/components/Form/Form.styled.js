@@ -42,6 +42,13 @@ export const FormStepStyled = styled.div`
         width: 100%;
         margin: 20px;
     }
+    & .birthDate--placeholder {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2px;
+        color: var(--color-font-black);
+        text-align: center;
+    }
 `;
 
 export const FormButtonsStyled = styled.div`

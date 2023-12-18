@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { FormContainerStyled, FormStepStyled, FormButtonsStyled } from './Form.styled';
-import FormProgressBar from './FormProgressBar';
+import FormProgressBar from './Progressbar/index';
 import Button from '../Button/index';
 import Input from '../Input/index';
+import { CustomDropdown, countryOptions } from './Dropdown/CustomDropdown';
 
 function Form() {
     const [step, setStep] = useState(1);
@@ -20,6 +22,7 @@ function Form() {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        console.log('Form submitted:', formData);
     };
 
     const handleInputChange = (e) => {
@@ -38,9 +41,10 @@ function Form() {
                 <FormStepStyled active={step === 1}>
                     <label htmlFor="firstName">
                         <Input
+                            id="firstName"
                             placeholder="First Name"
                             type="text"
-                            label="step 1"
+                            label="First Name"
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleInputChange}
@@ -49,35 +53,80 @@ function Form() {
                     </label>
                     <label htmlFor="lastName">
                         <Input
+                            id="lastName"
                             placeholder="Last Name"
                             type="text"
-                            label="step 1"
+                            label="Last Name"
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleInputChange}
                         />
-                        {}
+                        {errors.lastName && <p className="form__error">{errors.lastName}</p>}
                     </label>
-                    {}
+                    <label htmlFor="email">
+                        <Input
+                            id="email"
+                            placeholder="email@example.com"
+                            type="email"
+                            label="Email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                        />
+                        {errors.email && <p className="form__error">{errors.email}</p>}
+                    </label>
+                    <label htmlFor="birthDate">
+                        <span className="birthDate--placeholder">Birth Date</span>
+                        <Input
+                            id="birthDate"
+                            type="date"
+                            name="birthDate"
+                            value={formData.birthDate}
+                            onChange={handleInputChange}
+                        />
+                        {errors.birthDate && <p className="form__error">{errors.birthDate}</p>}
+                    </label>
                 </FormStepStyled>
 
                 <FormStepStyled active={step === 2}>
-                    <label htmlFor="lastName">
+                    <label htmlFor="country">
+                        <span className="country--input">Choose your country </span>
+                        <CustomDropdown
+                            options={countryOptions} // Exclude the "Select Country" option from the dropdown
+                            value={formData.country}
+                            onChange={(selectedCountry) =>
+                                handleInputChange({ target: { name: 'country', value: selectedCountry } })
+                            }
+                        />
+                    </label>
+                    <label htmlFor="address">
                         <Input
-                            placeholder="Last Name"
+                            id="address"
+                            placeholder="Town"
                             type="text"
-                            label="step 2"
-                            name="lastName"
-                            value={formData.lastName}
+                            label="Address"
+                            name="address"
+                            value={formData.address}
                             onChange={handleInputChange}
                         />
-                        {}
+                    </label>
+                    <label htmlFor="homeNumber">
+                        <Input
+                            id="homeNumber"
+                            placeholder="Home Number"
+                            type="text"
+                            label="Home Number"
+                            name="homeNumber"
+                            value={formData.homeNumber}
+                            onChange={handleInputChange}
+                        />
                     </label>
                 </FormStepStyled>
 
                 <FormStepStyled active={step === 3}>
                     <label htmlFor="email">
                         <Input
+                            id="email"
                             placeholder="email@example.com"
                             type="email"
                             label="step 3"
@@ -85,7 +134,7 @@ function Form() {
                             value={formData.email}
                             onChange={handleInputChange}
                         />
-                        {}
+                        {errors.email && <p className="form__error">{errors.email}</p>}
                     </label>
                 </FormStepStyled>
                 <FormProgressBar progress={progress} step={step} />
@@ -93,7 +142,14 @@ function Form() {
             <FormButtonsStyled>
                 {step > 1 && <Button onClick={handlePreviousStep}>◀ Previous</Button>}
 
-                {step < 3 ? <Button onClick={handleNextStep}>Next ▶</Button> : <Button type="submit"> Submit ✔</Button>}
+                {step < 3 ? (
+                    <Button onClick={handleNextStep}>Next ▶</Button>
+                ) : (
+                    <Button type="submit" onClick={handleFormSubmit}>
+                        {' '}
+                        Submit ✔
+                    </Button>
+                )}
             </FormButtonsStyled>
         </FormContainerStyled>
     );
