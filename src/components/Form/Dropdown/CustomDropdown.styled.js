@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledDropdown = styled.div`
     position: relative;
-    display: inline-block;
+    display: flex;
 
     select {
         width: 100%;
@@ -55,13 +55,6 @@ const StyledDropdown = styled.div`
                 background-color: #f2f2f2;
             }
         }
-    }
-    & .country--input {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 2px;
-        color: var(--color-font-black);
-        text-align: center;
     }
 `;
 

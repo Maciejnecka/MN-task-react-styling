@@ -49,6 +49,14 @@ export const FormStepStyled = styled.div`
         color: var(--color-font-black);
         text-align: center;
     }
+    & .country--input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 4px;
+        color: var(--color-font-black);
+        text-align: center;
+    }
 `;
 
 export const FormButtonsStyled = styled.div`

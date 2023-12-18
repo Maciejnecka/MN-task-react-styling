@@ -92,7 +92,7 @@ function Form() {
                     <label htmlFor="country">
                         <span className="country--input">Choose your country </span>
                         <CustomDropdown
-                            options={countryOptions} // Exclude the "Select Country" option from the dropdown
+                            options={countryOptions}
                             value={formData.country}
                             onChange={(selectedCountry) =>
                                 handleInputChange({ target: { name: 'country', value: selectedCountry } })
