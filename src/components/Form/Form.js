@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
 import validateFormFields from './validateForm';
 import FormRender from './FormRender';
@@ -71,7 +72,11 @@ function Form() {
             });
             setStep(1);
         } else {
+            // TODO
             console.log('Form has errors:', currentErrors);
+            // Wiem, że to leniwe rozwiązanie, załatam to jutro, chce żeby była jakakolwiek informacja :P
+            // eslint-disable-next-line no-alert
+            alert('Please correct required fields');
         }
     };
 

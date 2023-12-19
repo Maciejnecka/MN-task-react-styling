@@ -7,6 +7,7 @@ const FormSubmitScreenStyled = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
+    color: var(--color-neon-green);
     background-color: #fff;
     border: 1px solid #ccc;
     box-shadow: inset 5px 5px 10px #363636, inset -5px -5px 10px #dadada;
