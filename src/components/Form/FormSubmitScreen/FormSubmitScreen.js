@@ -1,41 +1,39 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+/* eslint-disable consistent-return */
+import React, { useEffect, useRef, useCallback } from 'react';
 import Button from '../../Button/index';
 import FormSubmitScreenStyled from './FormSubmitScreen.styled';
 
 function FormSubmitScreen({ visible, onClose }) {
-    const [localVisible, setLocalVisible] = useState(false);
     const containerRef = useRef(null);
 
-    const handleClose = useCallback(() => {
-        setLocalVisible(false);
-        onClose();
-    }, [onClose]);
+    const handleClickOutside = useCallback(
+        (event) => {
+            if (containerRef.current && !containerRef.current.contains(event.target)) {
+                onClose();
+            }
+        },
+        [onClose],
+    );
 
     useEffect(() => {
-        setLocalVisible(visible);
+        if (visible) {
+            const timeoutId = setTimeout(() => {
+                onClose();
+            }, 5000);
 
-        const handleClickOutside = (event) => {
-            if (containerRef.current && !containerRef.current.contains(event.target)) {
-                handleClose();
-            }
-        };
+            document.addEventListener('mousedown', handleClickOutside);
 
-        document.addEventListener('mousedown', handleClickOutside);
-
-        const timeoutId = setTimeout(() => {
-            handleClose();
-        }, 5000);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            clearTimeout(timeoutId);
-        };
-    }, [visible, handleClose]);
+            return () => {
+                clearTimeout(timeoutId);
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }
+    }, [visible, onClose, handleClickOutside]);
 
     return (
-        <FormSubmitScreenStyled ref={containerRef} visible={localVisible}>
+        <FormSubmitScreenStyled ref={containerRef} visible={visible}>
             <p>Your form has been submitted successfully!</p>
-            <Button onClick={handleClose}>Close</Button>
+            <Button onClick={onClose}>Close</Button>
         </FormSubmitScreenStyled>
     );
 }
