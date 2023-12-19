@@ -6,10 +6,12 @@ import Button from '../Button/index';
 import Checkbox from '../Checkbox/index';
 import { CustomDropdown, countryOptions } from './Dropdown/CustomDropdown';
 import StyledInput from '../Input/Input.styled';
+import validateFormFields from './validateForm';
 
 function Form() {
     const [step, setStep] = useState(1);
     const [progress, setProgress] = useState(0);
+    const [errors, setErrors] = useState({});
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -39,28 +41,31 @@ function Form() {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+
+        const currentErrors = validateFormFields(formData);
+        setErrors(currentErrors);
+
+        if (Object.keys(currentErrors).length === 0) {
+            console.log('Form submitted:', formData);
+        } else {
+            console.log('Form has errors:', currentErrors);
+        }
     };
+
+    const renderError = (fieldName) =>
+        errors && errors[fieldName] && <p className="form__error">{errors[fieldName]}</p>;
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         const inputValue = type === 'checkbox' ? checked : value;
 
-        console.log('Input Change:', name, inputValue);
-
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: inputValue,
         }));
-    };
 
-    const errors = () => {
-        const validationErrors = {};
-        if (!formData.firstName.trim()) {
-            validationErrors.firstName = 'First Name is required';
-        }
-
-        return validationErrors;
+        const currentErrors = validateFormFields({ ...formData, [name]: inputValue });
+        setErrors(currentErrors);
     };
 
     return (
@@ -77,7 +82,7 @@ function Form() {
                             value={formData.firstName}
                             onChange={handleInputChange}
                         />
-                        {errors.firstName && <p className="form__error">{errors.firstName}</p>}
+                        {renderError('firstName')}
                     </label>
                     <label htmlFor="lastName">
                         <StyledInput
@@ -88,7 +93,7 @@ function Form() {
                             value={formData.lastName}
                             onChange={handleInputChange}
                         />
-                        {errors.lastName && <p className="form__error">{errors.lastName}</p>}
+                        {renderError('lastName')}
                     </label>
                     <label htmlFor="email">
                         <StyledInput
@@ -99,7 +104,7 @@ function Form() {
                             value={formData.email}
                             onChange={handleInputChange}
                         />
-                        {errors.email && <p className="form__error">{errors.email}</p>}
+                        {renderError('email')}
                     </label>
                     <label htmlFor="birthDate">
                         <span className="birthDate--placeholder">Birth Date</span>
@@ -110,14 +115,14 @@ function Form() {
                             value={formData.birthDate}
                             onChange={handleInputChange}
                         />
-                        {errors.birthDate && <p className="form__error">{errors.birthDate}</p>}
+                        {renderError('birthDate')}
                     </label>
                 </FormStepStyled>
 
                 <FormStepStyled active={step === 2}>
                     <label htmlFor="country">
-                        <span className="country--input">Choose your country </span>
                         <CustomDropdown
+                            placeholder="Choose your country..."
                             options={countryOptions}
                             name="country"
                             value={formData.country}
@@ -125,6 +130,7 @@ function Form() {
                                 handleInputChange({ target: { name: 'country', value: selectedCountry } })
                             }
                         />
+                        {renderError('country')}
                     </label>
                     <label htmlFor="postalCode">
                         <StyledInput
@@ -163,7 +169,7 @@ function Form() {
                         <Checkbox
                             id="licenseAgreement"
                             checked={formData.acceptLicenseAgreement}
-                            name="licenseAgreement"
+                            name="License Agreement"
                             onChange={(e) =>
                                 handleInputChange({
                                     target: { name: 'acceptLicenseAgreement', value: e.target.checked },
@@ -172,6 +178,7 @@ function Form() {
                         >
                             I accept the End User License Agreement and Privacy Policy.
                         </Checkbox>
+                        {renderError('acceptLicenseAgreement')}
                     </label>
                     <label htmlFor="notARobot">
                         <Checkbox
@@ -184,6 +191,7 @@ function Form() {
                         >
                             I`m Not a robot
                         </Checkbox>
+                        {renderError('notARobot')}
                     </label>
                 </FormStepStyled>
                 <FormProgressBar progress={progress} step={step} />

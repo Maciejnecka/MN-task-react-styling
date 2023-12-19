@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 export const FormContainerStyled = styled.div`
     position: relative;
     width: 500px;
-    height: 500px;
+    height: 600px;
     margin: 2rem auto;
     padding: 2rem;
     border-radius: 15px;

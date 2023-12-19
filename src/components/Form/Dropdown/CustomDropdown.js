@@ -21,6 +21,7 @@ function CustomDropdown({ options, value, onChange }) {
 }
 // Zapewne jest lepsza opcja :D, linijki kodu na wage złota 💹😀
 const countryOptions = [
+    'Choose your country...',
     'Afghanistan',
     'Albania',
     'Algeria',
