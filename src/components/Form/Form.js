@@ -3,11 +3,7 @@ import validateFormFields from './validateForm';
 import FormRender from './FormRender';
 
 function Form() {
-    const [step, setStep] = useState(1);
-    const [progress, setProgress] = useState(0);
-    const [errors, setErrors] = useState({});
-    const [submitScreenVisible, setSubmitScreenVisible] = useState(false);
-    const [formData, setFormData] = useState({
+    const initialState = {
         firstName: '',
         lastName: '',
         email: '',
@@ -18,7 +14,12 @@ function Form() {
         homeNumber: '',
         acceptLicenseAgreement: false,
         notARobot: false,
-    });
+    };
+    const [step, setStep] = useState(1);
+    const [progress, setProgress] = useState(0);
+    const [errors, setErrors] = useState({});
+    const [submitScreenVisible, setSubmitScreenVisible] = useState(false);
+    const [formData, setFormData] = useState(initialState);
 
     useEffect(() => {
         const filledInputs = Object.values(formData).filter((value) => value !== '' && value !== false);
@@ -32,6 +33,19 @@ function Form() {
 
     const handlePreviousStep = () => {
         setStep(step - 1);
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        const inputValue = type === 'checkbox' ? checked : value;
+
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: inputValue,
+        }));
+
+        const currentErrors = validateFormFields({ [name]: inputValue });
+        setErrors((prevErrors) => ({ ...prevErrors, [name]: currentErrors[name] }));
     };
 
     const handleFormSubmit = (e) => {
@@ -59,21 +73,6 @@ function Form() {
         } else {
             console.log('Form has errors:', currentErrors);
         }
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        const inputValue = type === 'checkbox' ? checked : value;
-
-        const updatedFormData = {
-            ...formData,
-            [name]: inputValue,
-        };
-
-        setFormData(updatedFormData);
-
-        const currentErrors = validateFormFields({ [name]: inputValue });
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: currentErrors[name] }));
     };
 
     const renderError = (fieldName) =>
