@@ -56,6 +56,7 @@ function Form() {
         setErrors(currentErrors);
 
         if (Object.keys(currentErrors).length === 0) {
+            // TODO temp.
             console.log('Form submitted:', formData);
             setSubmitScreenVisible(true);
             setFormData({
