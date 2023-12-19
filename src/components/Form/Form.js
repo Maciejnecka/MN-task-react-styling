@@ -8,6 +8,7 @@ import { CustomDropdown, countryOptions } from './Dropdown/CustomDropdown';
 import StyledInput from '../Input/Input.styled';
 import validateFormFields from './validateForm';
 import FormSubmitScreen from './FormSubmitScreen/FormSubmitScreen';
+import { ModalOverlay } from './FormSubmitScreen/FormSubmitScreen.styled';
 
 function Form() {
     const [step, setStep] = useState(1);
@@ -234,6 +235,7 @@ function Form() {
                     </Button>
                 )}
             </FormButtonsStyled>
+            <ModalOverlay visible={submitScreenVisible} />
             <FormSubmitScreen visible={submitScreenVisible} onClose={() => setSubmitScreenVisible(false)} />
         </FormContainerStyled>
     );
