@@ -49,12 +49,13 @@ export const FormStepStyled = styled.div`
         color: var(--color-font-black);
         text-align: center;
     }
-    & .country--input {
+    & .form__error {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 4px;
-        color: var(--color-font-black);
+        margin-top: 7px;
+        font-weight: bold;
+        color: #ff0055;
         text-align: center;
     }
 `;

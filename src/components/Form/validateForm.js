@@ -20,7 +20,6 @@ const formFields = [
     {
         name: 'birthDate',
         label: 'Birth Date',
-        required: true,
     },
     {
         name: 'country',
@@ -65,6 +64,7 @@ function validateFormFields(formData) {
         if (pattern && value !== undefined && !pattern.test(value)) {
             errors[name] = `Invalid ${label}, @ is missing`;
         }
+
         if (name === 'country' && value === 'Choose your country...') {
             errors[name] = `${label} is required`;
         }

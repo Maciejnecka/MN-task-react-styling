@@ -7,11 +7,13 @@ import Checkbox from '../Checkbox/index';
 import { CustomDropdown, countryOptions } from './Dropdown/CustomDropdown';
 import StyledInput from '../Input/Input.styled';
 import validateFormFields from './validateForm';
+import FormSubmitScreen from './FormSubmitScreen/FormSubmitScreen';
 
 function Form() {
     const [step, setStep] = useState(1);
     const [progress, setProgress] = useState(0);
     const [errors, setErrors] = useState({});
+    const [submitScreenVisible, setSubmitScreenVisible] = useState(false);
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -47,26 +49,42 @@ function Form() {
 
         if (Object.keys(currentErrors).length === 0) {
             console.log('Form submitted:', formData);
+            setSubmitScreenVisible(true);
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                birthDate: '',
+                country: '',
+                postalCode: '',
+                address: '',
+                homeNumber: '',
+                acceptLicenseAgreement: false,
+                notARobot: false,
+            });
+            setStep(1);
         } else {
             console.log('Form has errors:', currentErrors);
         }
     };
 
-    const renderError = (fieldName) =>
-        errors && errors[fieldName] && <p className="form__error">{errors[fieldName]}</p>;
-
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         const inputValue = type === 'checkbox' ? checked : value;
 
-        setFormData((prevFormData) => ({
-            ...prevFormData,
+        const updatedFormData = {
+            ...formData,
             [name]: inputValue,
-        }));
+        };
 
-        const currentErrors = validateFormFields({ ...formData, [name]: inputValue });
-        setErrors(currentErrors);
+        setFormData(updatedFormData);
+
+        const currentErrors = validateFormFields({ [name]: inputValue });
+        setErrors((prevErrors) => ({ ...prevErrors, [name]: currentErrors[name] }));
     };
+
+    const renderError = (fieldName) =>
+        errors && errors[fieldName] && <p className="form__error">{errors[fieldName]}</p>;
 
     return (
         <FormContainerStyled>
@@ -81,6 +99,7 @@ function Form() {
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleInputChange}
+                            hasError={errors && errors.firstName}
                         />
                         {renderError('firstName')}
                     </label>
@@ -92,6 +111,7 @@ function Form() {
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleInputChange}
+                            hasError={errors && errors.lastName}
                         />
                         {renderError('lastName')}
                     </label>
@@ -103,6 +123,7 @@ function Form() {
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
+                            hasError={errors && errors.email}
                         />
                         {renderError('email')}
                     </label>
@@ -115,7 +136,6 @@ function Form() {
                             value={formData.birthDate}
                             onChange={handleInputChange}
                         />
-                        {renderError('birthDate')}
                     </label>
                 </FormStepStyled>
 
@@ -197,10 +217,16 @@ function Form() {
                 <FormProgressBar progress={progress} step={step} />
             </form>
             <FormButtonsStyled>
-                {step > 1 && <Button onClick={handlePreviousStep}>◀ Previous</Button>}
+                {step > 1 && (
+                    <Button type="button" onClick={handlePreviousStep}>
+                        ◀ Previous
+                    </Button>
+                )}
 
                 {step < 3 ? (
-                    <Button onClick={handleNextStep}>Next ▶</Button>
+                    <Button type="button" onClick={handleNextStep}>
+                        Next ▶
+                    </Button>
                 ) : (
                     <Button type="submit" onClick={handleFormSubmit}>
                         {' '}
@@ -208,6 +234,7 @@ function Form() {
                     </Button>
                 )}
             </FormButtonsStyled>
+            <FormSubmitScreen visible={submitScreenVisible} onClose={() => setSubmitScreenVisible(false)} />
         </FormContainerStyled>
     );
 }
