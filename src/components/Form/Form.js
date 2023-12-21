@@ -39,7 +39,8 @@ function Form() {
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         const inputValue = type === 'checkbox' ? checked : value;
-
+        // TEMP for commit
+        console.log(`Input changed - Name: ${name}, Value: ${value}`);
         setFormData((prevData) => ({
             ...prevData,
             [name]: inputValue,

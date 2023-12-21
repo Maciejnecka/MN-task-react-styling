@@ -5,7 +5,8 @@ import FormProgressBar from './Progressbar/index';
 import Button from '../Button/index';
 import Checkbox from '../Checkbox/index';
 import { CustomDropdown, countryOptions } from './Dropdown/CustomDropdown';
-import StyledInput from '../Input/Input.styled';
+// import StyledInput from '../Input/Input.styled';
+import Input from '../Input/Input';
 import FormSubmitScreen from './FormSubmitScreen/FormSubmitScreen';
 import { ModalOverlay } from './FormSubmitScreen/FormSubmitScreen.styled';
 
@@ -28,7 +29,7 @@ function FormRender({
             <form onSubmit={handleFormSubmit}>
                 <FormStepStyled active={step === 1}>
                     <label htmlFor="firstName">
-                        <StyledInput
+                        <Input
                             id="firstName"
                             placeholder="First Name"
                             type="text"
@@ -40,7 +41,7 @@ function FormRender({
                         {renderError('firstName')}
                     </label>
                     <label htmlFor="lastName">
-                        <StyledInput
+                        <Input
                             id="lastName"
                             placeholder="Last Name"
                             type="text"
@@ -52,7 +53,7 @@ function FormRender({
                         {renderError('lastName')}
                     </label>
                     <label htmlFor="email">
-                        <StyledInput
+                        <Input
                             id="email"
                             placeholder="email@example.com"
                             type="email"
@@ -65,7 +66,7 @@ function FormRender({
                     </label>
                     <label htmlFor="birthDate">
                         <span className="birthDate--placeholder">Birth Date</span>
-                        <StyledInput
+                        <Input
                             id="birthDate"
                             type="date"
                             name="birthDate"
@@ -91,7 +92,7 @@ function FormRender({
                         {renderError('country')}
                     </label>
                     <label htmlFor="postalCode">
-                        <StyledInput
+                        <Input
                             id="postalCode"
                             placeholder="Postal Code XX-XXX"
                             type="text"
@@ -101,7 +102,7 @@ function FormRender({
                         />
                     </label>
                     <label htmlFor="address">
-                        <StyledInput
+                        <Input
                             id="address"
                             placeholder="Town"
                             type="text"
@@ -111,7 +112,7 @@ function FormRender({
                         />
                     </label>
                     <label htmlFor="homeNumber">
-                        <StyledInput
+                        <Input
                             id="homeNumber"
                             placeholder="Home Number"
                             type="text"
