@@ -29,6 +29,9 @@ function FormRender({
             <form onSubmit={handleFormSubmit}>
                 <FormStepStyled active={step === 1}>
                     <label htmlFor="firstName">
+                        {(errors && errors.firstName) || !formData.firstName ? (
+                            <span className="field-label--required">*</span>
+                        ) : null}
                         <Input
                             id="firstName"
                             placeholder="First Name"
@@ -41,6 +44,9 @@ function FormRender({
                         {renderError('firstName')}
                     </label>
                     <label htmlFor="lastName">
+                        {(errors && errors.lastName) || !formData.lastName ? (
+                            <span className="field-label--required">*</span>
+                        ) : null}
                         <Input
                             id="lastName"
                             placeholder="Last Name"
@@ -53,6 +59,9 @@ function FormRender({
                         {renderError('lastName')}
                     </label>
                     <label htmlFor="email">
+                        {(errors && errors.email) || !formData.email ? (
+                            <span className="field-label--required">*</span>
+                        ) : null}
                         <Input
                             id="email"
                             placeholder="email@example.com"
@@ -78,6 +87,9 @@ function FormRender({
 
                 <FormStepStyled active={step === 2}>
                     <label htmlFor="country">
+                        {(errors && errors.country) || !formData.country ? (
+                            <span className="field-label--required">*</span>
+                        ) : null}
                         <CustomDropdown
                             placeholder="Choose your country..."
                             options={countryOptions}
@@ -125,6 +137,9 @@ function FormRender({
 
                 <FormStepStyled active={step === 3}>
                     <label htmlFor="licenseAgreement">
+                        {(errors && errors.licenseAgreement) || !formData.acceptLicenseAgreement ? (
+                            <span className="field-label--required">*</span>
+                        ) : null}
                         <Checkbox
                             id="licenseAgreement"
                             checked={formData.acceptLicenseAgreement}
@@ -140,6 +155,9 @@ function FormRender({
                         {renderError('acceptLicenseAgreement')}
                     </label>
                     <label htmlFor="notARobot">
+                        {(errors && errors.notARobot) || !formData.notARobot ? (
+                            <span className="field-label--required">*</span>
+                        ) : null}
                         <Checkbox
                             id="notARobot"
                             checked={formData.notARobot}

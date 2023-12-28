@@ -18,6 +18,15 @@ export const FormContainerStyled = styled.div`
     & h1 {
         margin-bottom: 1rem;
     }
+    label:has(.field-label--required) {
+        position: relative;
+    }
+    .field-label--required {
+        position: absolute;
+        left: -4%;
+        color: red;
+        font-size: 28px;
+    }
 `;
 
 const fadeInOut = keyframes`
