@@ -1,7 +1,7 @@
 import React from 'react';
 import StyledInput from './Input.styled';
 
-function Input({ type, placeholder, value, name, onChange, disabled }) {
+function Input({ type, placeholder, value, name, onChange, disabled, hasError }) {
     return (
         <StyledInput
             type={type}
@@ -10,6 +10,7 @@ function Input({ type, placeholder, value, name, onChange, disabled }) {
             onChange={onChange}
             disabled={disabled}
             name={name}
+            hasError={hasError}
         />
     );
 }
