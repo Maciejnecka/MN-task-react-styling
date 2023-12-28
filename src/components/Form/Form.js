@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
-import validateFormFields from './validateForm';
 import FormRender from './FormRender';
+import { formFields, validateFormFields } from './validateForm';
 
 function Form() {
     const initialState = {
@@ -23,10 +23,16 @@ function Form() {
     const [formData, setFormData] = useState(initialState);
 
     useEffect(() => {
-        const filledInputs = Object.values(formData).filter((value) => value !== '' && value !== false);
-        const calculatedProgress = (filledInputs.length / Object.keys(formData).length) * 100;
+        const requiredFields = formFields.filter((field) => field.required);
+
+        const filledRequiredInputs = requiredFields.filter((field) => {
+            const value = formData[field.name];
+            return value !== '' && value !== false && errors[field.name] === undefined;
+        });
+
+        const calculatedProgress = (filledRequiredInputs.length / requiredFields.length) * 100;
         setProgress(calculatedProgress);
-    }, [formData]);
+    }, [formData, errors]);
 
     const handleNextStep = () => {
         setStep(step + 1);

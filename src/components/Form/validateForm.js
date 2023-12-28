@@ -72,4 +72,4 @@ function validateFormFields(formData) {
     return errors;
 }
 
-export default validateFormFields;
+export { formFields, validateFormFields };
