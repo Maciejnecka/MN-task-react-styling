@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormContainerStyled, FormStepStyled, FormButtonsStyled } from './Form.styled';
 import FormProgressBar from './Progressbar/index';
 import Button from '../Button/index';
 import Checkbox from '../Checkbox/index';
 import { CustomDropdown, countryOptions } from './Dropdown/CustomDropdown';
-// import StyledInput from '../Input/Input.styled';
 import Input from '../Input/Input';
 import FormSubmitScreen from './FormSubmitScreen/FormSubmitScreen';
 import { ModalOverlay } from './FormSubmitScreen/FormSubmitScreen.styled';
@@ -23,11 +22,18 @@ function FormRender({
     handleInputChange,
     renderError,
 }) {
+    const [totalSteps, setTotalSteps] = useState(0);
+
+    useEffect(() => {
+        const steps = document.querySelectorAll('.form-step').length;
+        setTotalSteps(steps);
+    }, []);
+
     return (
         <FormContainerStyled>
             <h1>Neumorfizm Form</h1>
             <form onSubmit={handleFormSubmit}>
-                <FormStepStyled active={step === 1}>
+                <FormStepStyled className="form-step" active={step === 1}>
                     <label htmlFor="firstName">
                         {(errors && errors.firstName) || !formData.firstName ? (
                             <span className="field-label--required">*</span>
@@ -85,7 +91,7 @@ function FormRender({
                     </label>
                 </FormStepStyled>
 
-                <FormStepStyled active={step === 2}>
+                <FormStepStyled className="form-step" active={step === 2}>
                     <label htmlFor="country">
                         {(errors && errors.country) || !formData.country ? (
                             <span className="field-label--required">*</span>
@@ -135,7 +141,7 @@ function FormRender({
                     </label>
                 </FormStepStyled>
 
-                <FormStepStyled active={step === 3}>
+                <FormStepStyled className="form-step" active={step === 3}>
                     <label htmlFor="licenseAgreement">
                         {(errors && errors.licenseAgreement) || !formData.acceptLicenseAgreement ? (
                             <span className="field-label--required">*</span>
@@ -180,7 +186,7 @@ function FormRender({
                     </Button>
                 )}
 
-                {step < 3 ? (
+                {step < totalSteps ? (
                     <Button type="button" onClick={handleNextStep}>
                         Next ▶
                     </Button>
