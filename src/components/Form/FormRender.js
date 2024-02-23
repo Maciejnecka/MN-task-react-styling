@@ -3,13 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { FormContainerStyled, FormStepStyled, FormButtonsStyled } from './Form.styled';
 import FormProgressBar from './Progressbar/index';
 import Button from '../Button/index';
-import Checkbox from '../Checkbox/index';
-import CustomDropdown from './Dropdown/CustomDropdown';
-import countryOptions from '../constants/countryOptions';
-import Input from '../Input/Input';
 import FormSubmitScreen from './FormSubmitScreen/FormSubmitScreen';
 import { ModalOverlay } from './FormSubmitScreen/FormSubmitScreen.styled';
 import { validateFormFields } from './validateForm';
+import { formFields, renderInputField } from './formUtilis';
 
 function FormRender({
     step,
@@ -46,150 +43,16 @@ function FormRender({
         <FormContainerStyled>
             <h1>Neumorfizm Form</h1>
             <form onSubmit={handleFormSubmit}>
-                <FormStepStyled className="form-step" active={step === 1}>
-                    <label htmlFor="firstName">
-                        {(errors && errors.firstName) || !formData.firstName ? (
-                            <span className="field-label--required">*</span>
-                        ) : null}
-                        <Input
-                            id="firstName"
-                            placeholder="First Name"
-                            type="text"
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleInputChange}
-                            hasError={errors && errors.firstName}
-                        />
-                        {renderError('firstName')}
-                    </label>
-                    <label htmlFor="lastName">
-                        {(errors && errors.lastName) || !formData.lastName ? (
-                            <span className="field-label--required">*</span>
-                        ) : null}
-                        <Input
-                            id="lastName"
-                            placeholder="Last Name"
-                            type="text"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleInputChange}
-                            hasError={errors && errors.lastName}
-                        />
-                        {renderError('lastName')}
-                    </label>
-                    <label htmlFor="email">
-                        {(errors && errors.email) || !formData.email ? (
-                            <span className="field-label--required">*</span>
-                        ) : null}
-                        <Input
-                            id="email"
-                            placeholder="email@example.com"
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            hasError={errors && errors.email}
-                        />
-                        {renderError('email')}
-                    </label>
-                    <label htmlFor="birthDate">
-                        <span className="birthDate--placeholder">Birth Date</span>
-                        <Input
-                            id="birthDate"
-                            type="date"
-                            name="birthDate"
-                            value={formData.birthDate}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                </FormStepStyled>
-
-                <FormStepStyled className="form-step" active={step === 2}>
-                    <label htmlFor="country">
-                        {(errors && errors.country) || !formData.country ? (
-                            <span className="field-label--required">*</span>
-                        ) : null}
-                        <CustomDropdown
-                            placeholder="Choose your country..."
-                            options={countryOptions}
-                            name="country"
-                            value={formData.country}
-                            onChange={(selectedCountry) =>
-                                handleInputChange({
-                                    target: { name: 'country', value: selectedCountry },
-                                })
-                            }
-                        />
-                        {renderError('country')}
-                    </label>
-                    <label htmlFor="postalCode">
-                        <Input
-                            id="postalCode"
-                            placeholder="Postal Code XX-XXX"
-                            type="text"
-                            name="postalCode"
-                            value={formData.postalCode}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label htmlFor="address">
-                        <Input
-                            id="address"
-                            placeholder="Town"
-                            type="text"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label htmlFor="homeNumber">
-                        <Input
-                            id="homeNumber"
-                            placeholder="Home Number"
-                            type="text"
-                            name="homeNumber"
-                            value={formData.homeNumber}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                </FormStepStyled>
-
-                <FormStepStyled className="form-step" active={step === 3}>
-                    <label htmlFor="licenseAgreement">
-                        {(errors && errors.licenseAgreement) || !formData.acceptLicenseAgreement ? (
-                            <span className="field-label--required">*</span>
-                        ) : null}
-                        <Checkbox
-                            id="licenseAgreement"
-                            checked={formData.acceptLicenseAgreement}
-                            name="License Agreement"
-                            onChange={(e) =>
-                                handleInputChange({
-                                    target: { name: 'acceptLicenseAgreement', value: e.target.checked },
-                                })
-                            }
-                        >
-                            I accept the End User License Agreement and Privacy Policy.
-                        </Checkbox>
-                        {renderError('acceptLicenseAgreement')}
-                    </label>
-                    <label htmlFor="notARobot">
-                        {(errors && errors.notARobot) || !formData.notARobot ? (
-                            <span className="field-label--required">*</span>
-                        ) : null}
-                        <Checkbox
-                            id="notARobot"
-                            checked={formData.notARobot}
-                            name="notARobot"
-                            onChange={(e) =>
-                                handleInputChange({ target: { name: 'notARobot', value: e.target.checked } })
-                            }
-                        >
-                            I`m Not a robot
-                        </Checkbox>
-                        {renderError('notARobot')}
-                    </label>
-                </FormStepStyled>
+                {formFields.map((formStep) => (
+                    <FormStepStyled key={formStep.step} className="form-step" active={step === formStep.step}>
+                        {formStep.fields.map((field) => (
+                            <label key={field.id} htmlFor={field.id}>
+                                {renderInputField(field, formData, handleInputChange, errors)}
+                                {renderError(field.name)}
+                            </label>
+                        ))}
+                    </FormStepStyled>
+                ))}
                 <FormProgressBar progress={progress} step={step} />
             </form>
             <FormButtonsStyled>
@@ -205,7 +68,6 @@ function FormRender({
                     </Button>
                 ) : (
                     <Button type="submit" onClick={handleFormSubmit}>
-                        {' '}
                         Submit ✔
                     </Button>
                 )}
