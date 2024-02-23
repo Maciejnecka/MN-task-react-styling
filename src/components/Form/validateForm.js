@@ -46,10 +46,17 @@ const formFields = [
     },
 ];
 
-function validateFormFields(formData) {
+function validateFormFields(formData, step = null) {
     const errors = {};
 
-    formFields.forEach((field) => {
+    const fieldsToValidate = formFields.filter((field) => {
+        if (step === 1) return ['firstName', 'lastName', 'email'].includes(field.name);
+        if (step === 2) return ['country'].includes(field.name);
+        if (step === 3) return ['acceptLicenseAgreement', 'notARobot'].includes(field.name);
+        return true;
+    });
+
+    fieldsToValidate.forEach((field) => {
         const { name, label, required, minLength, pattern } = field;
         const value = formData[name];
 

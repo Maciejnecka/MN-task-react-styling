@@ -82,7 +82,6 @@ function Form() {
         } else {
             // TODO
             console.log('Form has errors:', currentErrors);
-            // Wiem, że to leniwe rozwiązanie, załatam to jutro, chce żeby była jakakolwiek informacja :P
             // eslint-disable-next-line no-alert
             alert('Please correct required fields');
         }
@@ -96,6 +95,7 @@ function Form() {
             step={step}
             progress={progress}
             errors={errors}
+            setErrors={setErrors}
             formData={formData}
             submitScreenVisible={submitScreenVisible}
             setSubmitScreenVisible={setSubmitScreenVisible}

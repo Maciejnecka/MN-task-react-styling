@@ -4,10 +4,12 @@ import { FormContainerStyled, FormStepStyled, FormButtonsStyled } from './Form.s
 import FormProgressBar from './Progressbar/index';
 import Button from '../Button/index';
 import Checkbox from '../Checkbox/index';
-import { CustomDropdown, countryOptions } from './Dropdown/CustomDropdown';
+import CustomDropdown from './Dropdown/CustomDropdown';
+import countryOptions from '../constants/countryOptions';
 import Input from '../Input/Input';
 import FormSubmitScreen from './FormSubmitScreen/FormSubmitScreen';
 import { ModalOverlay } from './FormSubmitScreen/FormSubmitScreen.styled';
+import { validateFormFields } from './validateForm';
 
 function FormRender({
     step,
@@ -21,6 +23,7 @@ function FormRender({
     handleFormSubmit,
     handleInputChange,
     renderError,
+    setErrors,
 }) {
     const [totalSteps, setTotalSteps] = useState(0);
 
@@ -28,6 +31,16 @@ function FormRender({
         const steps = document.querySelectorAll('.form-step').length;
         setTotalSteps(steps);
     }, []);
+
+    const validateAndProceed = () => {
+        const formStepErrors = validateFormFields(formData, step);
+
+        if (Object.keys(formStepErrors).length > 0) {
+            setErrors(formStepErrors);
+        } else {
+            handleNextStep();
+        }
+    };
 
     return (
         <FormContainerStyled>
@@ -187,7 +200,7 @@ function FormRender({
                 )}
 
                 {step < totalSteps ? (
-                    <Button type="button" onClick={handleNextStep}>
+                    <Button type="button" onClick={validateAndProceed}>
                         Next ▶
                     </Button>
                 ) : (
